@@ -49,7 +49,7 @@ The chatbot uses **Retrieval-Augmented Generation (RAG)** to answer questions ba
 
 ---
 
-## 🚀 Deployment
+## 🚀🚀 Deployment
 The application is containerized with Docker and deployed to Azure.
 
 ---
