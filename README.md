@@ -19,7 +19,6 @@ The chatbot uses **Retrieval-Augmented Generation (RAG)** to answer questions ba
 - Chat interface for asking questions about civil defense
 - Answers based on real MCF content (RAG)
 - Source references to original pages
-- Optional quiz to test crisis preparedness knowledge
 
 ---
 
@@ -27,7 +26,7 @@ The chatbot uses **Retrieval-Augmented Generation (RAG)** to answer questions ba
 - **Backend:** Python, FastAPI  
 - **Frontend:** Streamlit  
 - **AI:** LLM + embeddings (RAG)  
-- **Vector Database:** FAISS / Chroma / DuckDB  
+- **Vector Database:** LanceCb
 - **Deployment:** Docker & Azure  
 - **Version Control:** GitHub (branches, pull requests, Kanban)
 
@@ -43,7 +42,7 @@ The chatbot uses **Retrieval-Augmented Generation (RAG)** to answer questions ba
 ---
 
 ## 👥 Team & Workflow
-- 3–4 developers working with agile methodology
+- 3 developers working with agile methodology
 - Kanban board with issues and pull requests
 - Code reviews before merging to `main`
 
