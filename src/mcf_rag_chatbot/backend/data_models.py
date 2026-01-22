@@ -3,7 +3,7 @@ from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from dotenv import load_dotenv
 import os
-import datetime
+from datetime import datetime
 
 load_dotenv() #Read the .env file for API-KEY
 
