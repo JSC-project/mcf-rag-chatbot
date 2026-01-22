@@ -5,9 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "pydantic-ai>=1.44.0",
+    "beautifulsoup4>=4.14.3",
+    "requests>=2.32.5",
     "streamlit>=1.53.0",
 ]
-
-[tool.uv.workspace]
-members = ["ragbit"]
