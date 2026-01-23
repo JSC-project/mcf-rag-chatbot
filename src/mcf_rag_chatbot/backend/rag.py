@@ -10,7 +10,7 @@ from .data_models import RagResponse
 load_dotenv()
 
 
-DOCS_PATH = Path("data/dev_docs.json")
+DOCS_PATH = Path(__file__).resolve().parents[3] / "webscraper/data/dev_docs.json"
 
 
 rag_agent = Agent(
