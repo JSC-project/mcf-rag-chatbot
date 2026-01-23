@@ -92,7 +92,7 @@ def extract_links(html: str) -> list[str]:
     return links
 
 def save_page(data: dict, url: str):
-    data_folder = Path(__file__).resolve().parent.parent / "data" # add folder if needed
+    data_folder = Path(__file__).parent / "data" 
     data_folder.mkdir(exist_ok=True)
 
     safe_name = url.replace(BASE_URL, "").strip("/").replace("/", "_")

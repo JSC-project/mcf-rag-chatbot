@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-from rag import rag_agent
-from data_models import Prompt
-
+from mcf_rag_chatbot.backend.data_models import Prompt
+from mcf_rag_chatbot.backend.rag import rag_agent
 app = FastAPI()
 
 # root page message
