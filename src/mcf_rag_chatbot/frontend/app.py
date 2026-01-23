@@ -18,6 +18,4 @@ if st.button("SEND") and user_prompt.strip() != "":
     st.markdown("## Answer:")
     st.markdown(data["answer"])
     
-    st.markdown("## Source:")
-    st.markdown(data["filepath"])
     
