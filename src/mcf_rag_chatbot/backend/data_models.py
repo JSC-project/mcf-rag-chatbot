@@ -4,6 +4,7 @@ from lancedb.pydantic import LanceModel, Vector
 from dotenv import load_dotenv
 import os
 from datetime import datetime
+from typing import Optional
 
 load_dotenv() #Read the .env file for API-KEY
 
@@ -27,10 +28,22 @@ class MCFContent(LanceModel):
 
     # The 'VectorField' stores the AI's numerical understanding of the content.
     # We use 768 dimensions (the fixed output size of Gemini 004).
-    vector: Vector(768) = embeddings_model.VectorField() # type: ignore
+    vector: Optional[Vector(768)] = embeddings_model.VectorField(default=None) # type: ignore
 
     # Automatically timestamp every entry when it's created
     updated_at: str = Field(default_factory=lambda: datetime.now().isoformat())
+
+
+class UserQuery(BaseModel):
+    #Validates the raw question coming from the user
+    prompt: str
+
+
+class MCFResponse(BaseModel):
+    #Defines the final answer fromat including source tracking
+    answer: str
+    source_url: str = Field(description="Länk till källan")
+    source_title: str = Field(description="Title på källsidan ")
 
 
 class RagResponse(BaseModel):
