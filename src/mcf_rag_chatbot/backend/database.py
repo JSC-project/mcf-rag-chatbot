@@ -5,6 +5,7 @@ from .data_models import MCFContent
 
 
 def get_db():
+    VECTOR_DATABASE_PATH.mkdir(parents=True, exist_ok=True)
     #Connects to Lancedb at the location we determined in constants.py
     return lancedb.connect(VECTOR_DATABASE_PATH)
 
@@ -46,3 +47,8 @@ def search_knowledge_base(query: str, limit: int = 3):
     #LanceDB converts your text query into a vector and searches the database
     results = table.search(query).limit(limit).to_pydantic(MCFContent)
     return results
+
+if __name__ == "__main__":
+    print("DB path:", VECTOR_DATABASE_PATH.resolve())
+    init_table()
+    print("OK: knowledge_base initialized")
