@@ -2039,6 +2039,7 @@ source = { editable = "." }
 dependencies = [
     { name = "bs4" },
     { name = "fastapi" },
+    { name = "google-generativeai" },
     { name = "lancedb", extra = ["embeddings"] },
     { name = "langchain-text-splitters" },
     { name = "pyarrow" },
@@ -2051,6 +2052,7 @@ dependencies = [
 requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
     { name = "fastapi", specifier = ">=0.128.0" },
+    { name = "google-generativeai", specifier = ">=0.8.6" },
     { name = "lancedb", extras = ["embeddings"], specifier = ">=0.27.0" },
     { name = "langchain-text-splitters", specifier = ">=1.1.0" },
     { name = "pyarrow", specifier = ">=23.0.0" },
