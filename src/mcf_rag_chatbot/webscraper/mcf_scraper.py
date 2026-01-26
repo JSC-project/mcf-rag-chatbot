@@ -1,36 +1,17 @@
-from pathlib import Path 
 import requests 
 from bs4 import BeautifulSoup
-from pydantic import BaseModel, Field 
-from typing import List, Dict
-from mcf_rag_chatbot.backend.constants import DATA_PATH
-
-# models
-class MCFHeading(BaseModel):
-    level: str # html headings
-    text: str
-    
-class MCFPage(BaseModel): 
-    url: str 
-    title: str 
-    headings: List[MCFHeading] 
-    content: str
-
-class MCFLinkMap(BaseModel): 
-    links: Dict[str, str] = Field( 
-        description="Dict with slug → full URL" )
+from .utils import clean_text
+from .models import MCFHeading, MCFLink, MCFPage, ExtractHtml
 
 # html extraction model 
 class ExtractHtml:
-    
     def soup(url: str):
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         return BeautifulSoup(response.text, "html.parser")
 
-# fetch all artickle links
+# fetch all links
 class MCFLinkScraper:
-    
     # website base url
     BASE_URL = "https://www.mcf.se"
     
@@ -38,7 +19,7 @@ class MCFLinkScraper:
         clean_path = start_path.strip("/") 
         self.start_url = f"{self.BASE_URL}/{clean_path}/"
     
-    def scrape_links(self) -> MCFLinkMap:
+    def scrape_links(self) -> MCFLink:
         soup = ExtractHtml.soup(self.start_url)
 
         links = soup.select("a[href]")
@@ -62,9 +43,9 @@ class MCFLinkScraper:
         # slug → url
         link_map = {url.rstrip("/").split("/")[-1]: url for url in article_links}
 
-        return MCFLinkMap(links=link_map)
+        return MCFLink(links=link_map)
 
-# page scraper
+# data scraper
 class MCFPageScraper:
     def __init__(self, url: str):
         self.url = url
@@ -98,8 +79,7 @@ class MCFPageScraper:
             return alt2
 
         return soup.find("main") or soup
-
-            
+        
     def extract(self) -> MCFPage:
         article = self._find_article_container()
 
@@ -109,7 +89,10 @@ class MCFPageScraper:
 
         # headings
         headings = [
-            MCFHeading(level=tag.name, text=tag.get_text(strip=True))
+            MCFHeading(
+                level=tag.name,
+                text=clean_text(tag.get_text(strip=True))
+            )
             for tag in article.find_all(["h2", "h3"])
         ]
 
@@ -125,7 +108,7 @@ class MCFPageScraper:
 
         parts = []
 
-        # extract in correct DOM order
+        # extract in order according to source format
         for container in containers:
             for element in container.descendants:
                 if element.name == "p":
@@ -147,42 +130,18 @@ class MCFPageScraper:
             content=content,
         )
 
-    def save_page(data: dict, url: str):
-        DATA_PATH.mkdir(parents=True, exist_ok=True)
+# if __name__ == "__main__":
+    
+#     html = MCFPageScraper(url).soup.prettify()
 
-        safe_name = url.replace(BASE_URL, "").strip("/").replace("/", "_")
-        filepath = DATA_PATH / f"{safe_name}.json"
+#     for start in range(300000, 365000, 5000):
+#         print(f"\n--- BLOCK {start}–{start+5000} ---\n")
+#         print(html[start:start+5000])
 
-        with filepath.open("w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-
-        print(f"saved: {filepath}")
-
-if __name__ == "__main__":
-
-    print("Hämtar länkar...\n")
-
-    links = MCFLinkScraper(
-        "sv/rad-till-privatpersoner/hemberedskap---preppa-for-en-vecka"
-    ).scrape_links()
-
-    print(f"Hittade {len(links.links)} länkar:")
-    for slug, url in links.links.items():
-        print(f" - {slug} → {url}")
-
-    print("\nTestar första sidan...\n")
-
-    # välj en specifik sida för att vara säker
-    test_slug = "beredskap-for-dina-husdjur"
-    url = links.links.get(test_slug) or next(iter(links.links.values()))
-
-    page = MCFPageScraper(url).extract()
-    print(page.model_dump())
-        
-    #html = MCFPageScraper(url).soup.prettify() # checking html structure
-
-
-
+# sources:
+# https://pypi.org/project/beautifulsoup4/
+# copilot
+# https://github.com/AIgineerAB/scraping-nbi/blob/main/scraper.py
 
 
 
