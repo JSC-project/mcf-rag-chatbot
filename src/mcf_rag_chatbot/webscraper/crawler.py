@@ -1,8 +1,8 @@
 import json
 import requests
-from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
+from mcf_rag_chatbot.backend.constants import DATA_PATH
 
 BASE_URL = "https://www.mcf.se"
 START_URL = "https://www.mcf.se/sv/rad-till-privatpersoner/hemberedskap---preppa-for-en-vecka/"
@@ -92,11 +92,10 @@ def extract_links(html: str) -> list[str]:
     return links
 
 def save_page(data: dict, url: str):
-    data_folder = Path(__file__).parent / "data" 
-    data_folder.mkdir(exist_ok=True)
+    DATA_PATH.mkdir(parents=True, exist_ok=True)
 
     safe_name = url.replace(BASE_URL, "").strip("/").replace("/", "_")
-    filepath = data_folder / f"{safe_name}.json"
+    filepath = DATA_PATH / f"{safe_name}.json"
 
     with filepath.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
