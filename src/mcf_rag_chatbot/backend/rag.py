@@ -2,15 +2,13 @@ from __future__ import annotations
 from dotenv import load_dotenv
 import re
 import json
-from pathlib import Path
+import lancedb
 
 from pydantic_ai import Agent
 from .data_models import RagResponse
+from .constants import VECTOR_DATABASE_PATH
 
-load_dotenv()
-
-
-DOCS_PATH = Path(__file__).resolve().parents[3] / "webscraper/data/dev_docs.json"
+vector_db = lancedb.connect(uri=str(VECTOR_DATABASE_PATH))
 
 
 rag_agent = Agent(
