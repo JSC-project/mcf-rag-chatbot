@@ -18,6 +18,7 @@ dependencies = [
     "pydantic-ai>=1.44.0",
     "requests>=2.32.5",
     "streamlit>=1.53.0",
+    "pydantic>=2.12.5",
 ]
 
 [project.scripts]
