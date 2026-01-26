@@ -21,6 +21,7 @@ dependencies = [
     "pydantic>=2.12.5",
     "google-generativeai>=0.8.6",
     "ipykernel>=7.1.0",
+    "pydantic>=2.12.5",
 ]
 
 [project.scripts]
