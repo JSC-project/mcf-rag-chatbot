@@ -33,22 +33,11 @@ class MCFContent(LanceModel):
     # Automatically timestamp every entry when it's created
     updated_at: str = Field(default_factory=lambda: datetime.now().isoformat())
 
-
-class UserQuery(BaseModel):
-    #Validates the raw question coming from the user
-    prompt: str
-
-
-class MCFResponse(BaseModel):
-    #Defines the final answer fromat including source tracking
-    answer: str
-    source_url: str = Field(description="Länk till källan")
-    source_title: str = Field(description="Title på källsidan ")
-
-
 class RagResponse(BaseModel):
-    answer: str = Field(description="Short answer based on retrieved content.")
-    source_url: str | None = Field(default=None, description="URL to the source used.")
+    answer: str
+    source_url: str | None = None
+    source_title: str | None = None
+
     
 class Prompt(BaseModel):
     prompt: str
