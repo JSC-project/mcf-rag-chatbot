@@ -142,20 +142,20 @@ class MCFPageScraper:
 
 
 # for testing
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     links = MCFLinkScraper(
-#         "sv/rad-till-privatpersoner/hemberedskap---preppa-for-en-vecka"
-#     ).scrape_links()
+     links = MCFLinkScraper(
+         "sv/rad-till-privatpersoner/hemberedskap---preppa-for-en-vecka/beredskap-for-dina-husdjur/"
+    ).scrape_links()
 
-#     print(f"{len(links.links)} links:\n")
+     print(f"{len(links.links)} links:\n")
 
-#     for slug, url in links.links.items():
-#         print(f"- {slug} → {url}")
+     for slug, url in links.links.items():
+         print(f"- {slug} → {url}")
 
-#     for slug, url in links.links.items():
-#         page = MCFPageScraper(url).extract()
-#         export_data(page.model_dump(), url)
+     for slug, url in links.links.items():
+         page = MCFPageScraper(url).extract()
+         export_data(page.model_dump(), url)
 
 
 # sources:
