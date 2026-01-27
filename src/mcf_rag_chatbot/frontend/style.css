@@ -1,0 +1,77 @@
+/* style.css */
+
+/* Hide streamlite elements */
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* remove the white bar and padding at the bottom */
+.stApp{
+    overflow: hidden;
+}
+
+[data-testid="stAppViewBlockContainer"] {
+    padding-bottom: 0rem !important;
+    padding-top: 2rem !important;
+}
+
+.stMain, [data-testid="stAppViewMain"] {
+    background-color: transparent !important;
+}
+
+/* Chat Message Bubbles */
+[data-testid="stChatMessage"] {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px !important;
+    max-width: 800px;
+    margin: 10px auto !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+/* Chat Input Styling - Fixed at bottom, no white background */
+[data-testid="stChatInput"] {
+    background-color: transparent !important;
+    border: none !important;
+    position: fixed;
+    bottom: 30px;
+    z-index: 1000;
+}
+
+/* The actual floating input capsule */
+[data-testid="stChatInput"] > div {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 25px !important;
+    padding: 10px 20px !important;
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+/* The actual floating input capsule */
+[data-testid="stChatInput"] > div {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 25px !important;
+    padding: 10px 20px !important;
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+/* Text visibility inside input - Black to be visible */
+.stChatInput textarea {
+    color: #1e1e1e !important;
+    font-size: 1.1rem !important;
+}
+
+/* Typography */
+h1 {
+    text-align: center;
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    font-weight: 800;
+}
+
+p {
+    text-align: center;
+    color: rgba(255,255,255,0.9) !important;
+}
