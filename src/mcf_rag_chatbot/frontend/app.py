@@ -59,7 +59,7 @@ st.markdown(f"""
     <style>
     .stApp {{
         background: linear-gradient(rgba(0, 31, 63, 0.82), rgba(0, 31, 63, 0.82)), 
-                    url("data:image/webp;base64,{img_base64}") no-repeat center center fixed;
+        url("data:image/webp;base64,{img_base64}") no-repeat center center fixed;
         background-size: cover;
     }}
     </style>
@@ -88,24 +88,24 @@ if prompt := st.chat_input("Ställ din fråga..."):
                 result = rag_agent.run_sync(prompt)
                 
                 # Recive text from pydantic-modell (RagResponse)
-                # Adjust 'answer' and 'source_url' if they are named someting else in data_models.py
                 ans = result.output.answer
-                url = result.output.source_url
+                res_url = result.output.url
+                res_title = result.output.title
                 
+                
+
                 #Display response
-                full_response = f"{ans}\n\n**Källa:** {url}" if url else ans
+                if res_url:
+                    full_response = f"{ans}\n\n**Källa:** [{res_title}]({res_url})"
+                else:
+                    full_response = ans
+                
+                
                 st.markdown(full_response)
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
                 
                 
-                
-                
-                
-                st.session_state.messages.append({"role": "assistant", "content": full_response})
-                
             except Exception as e:
-                # Här fångar vi upp felet "DOCS_PATH is not defined"
-                if "DOCS_PATH" in str(e):
-                    st.error("Backend-fel: Agenten letar efter en JSON-fil, men vi kör ju LanceDB! Be din kompis uppdatera retrieve_top_documents.")
-                else:
-                    st.error(f"Ett fel uppstod: {e}")
+            # Ta bort IF-satsen för DOCS_PATH eftersom den variabeln är död nu
+                st.error(f"Ett fel uppstod: {e}")
+                
