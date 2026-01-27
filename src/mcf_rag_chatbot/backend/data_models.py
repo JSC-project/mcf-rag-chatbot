@@ -34,9 +34,9 @@ class MCFContent(LanceModel):
     updated_at: str = Field(default_factory=lambda: datetime.now().isoformat())
 
 class RagResponse(BaseModel):
-    answer: str
-    source_url: str | None = None
-    source_title: str | None = None
+    title: str = Field(description="title of the used source")
+    url: str = Field(description="url of the used source")
+    answer: str = Field(description="answer based on retrieved content")
 
     
 class Prompt(BaseModel):
