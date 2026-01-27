@@ -9,3 +9,5 @@ dependencies = [
     "requests",
     "pydantic",
 ]
+[tool.uv]
+package = true

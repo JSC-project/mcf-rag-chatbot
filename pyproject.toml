@@ -7,24 +7,7 @@ authors = [
     { name = "Casper Zanichell", email = "casperzanichelli98@gmail.com" }
 ]
 requires-python = ">=3.11"
-dependencies = [
-    "bs4>=0.0.2",
-    "langchain-text-splitters>=1.1.0",
-    "pyarrow>=23.0.0",
-    "fastapi>=0.128.0",
-    "lancedb[embeddings]>=0.27.0",
-    "langchain-text-splitters>=1.1.0",
-    "pyarrow>=23.0.0",
-    "pydantic-ai>=1.44.0",
-    "requests>=2.32.5",
-    "streamlit>=1.53.0",
-    "pydantic>=2.12.5",
-    "google-generativeai>=0.8.6",
-    "ipykernel>=7.1.0",
-    "pydantic>=2.12.5",
-    "google-generativeai>=0.8.6",
-    "ipykernel>=7.1.0",
-]
+
 dependencies = ["backend", "frontend", "webscraper"]
 
 [tool.uv.sources]

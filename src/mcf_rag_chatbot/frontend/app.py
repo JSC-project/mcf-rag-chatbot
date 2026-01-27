@@ -2,7 +2,9 @@ import streamlit as st
 import asyncio
 import requests
 from pathlib import Path
+import os
 
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 # Configs
 st.set_page_config(page_title="MCF-Chatbot", layout="centered")

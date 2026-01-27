@@ -5,7 +5,10 @@ WORKDIR /app/webscraper
 
 # later in docker compose, we'll use a context that is parent of frontend folder
 # then we can send in the frontend folder by writing frontend
-COPY webscraper .
+COPY src/mcf_rag_chatbot/webscraper .
+COPY pyproject.toml uv.lock ./
+COPY src/mcf_rag_chatbot/backend/pyproject.toml backend/pyproject.toml
+
 
 # installs uv
 RUN pip install --no-cache-dir uv

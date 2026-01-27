@@ -4,7 +4,10 @@ FROM python:3.13-slim
 WORKDIR /app
 
 COPY knowledge_base knowledge_base
-COPY backend backend
+COPY src/mcf_rag_chatbot/backend backend
+COPY pyproject.toml uv.lock ./
+COPY src/mcf_rag_chatbot/backend/pyproject.toml backend/pyproject.toml
+
 
 WORKDIR /app/backend
 
