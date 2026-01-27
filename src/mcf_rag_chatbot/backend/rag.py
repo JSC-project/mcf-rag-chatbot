@@ -1,4 +1,6 @@
 from __future__ import annotations
+import re
+import json
 import lancedb
 from pydantic_ai import Agent
 from .data_models import RagResponse
@@ -13,7 +15,7 @@ rag_agent = Agent(
     system_prompt=("""
         You MUST use the provided tool to retrieve documents before answering.
         Answer ONLY using information from the retrieved documents.
-        If retrieve_top_documents returns NO_RELEVANT_DOCUMENTS, reply exactly: "Sorry, I don't know that".
+        If you cannot find the answer, respond with: "Sorry, I don't know that".
         Keep the answer short and clear.
         Always include the source title and source url.
         """
@@ -28,14 +30,14 @@ def retrieve_top_documents(query: str, k: int = 3) -> str:
     
     results = table.search(query).limit(k).to_list()
     if not results:
-        return "NO_RELEVANT_DOCUMENTS"
+        return "No relevant douments"
     
     parts: list[str] = []
 
     for i, r in enumerate(results, start=1):
         title = r["title"]
         url = r["url"]
-        content= r["content"]
+        content= ["content"]
 
         content_snippet = content[:1500]
 
