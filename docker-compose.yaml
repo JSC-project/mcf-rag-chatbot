@@ -3,27 +3,25 @@ services:
   webscraper:
     build:
       context: .
-      dockerfile: webscraper/Dockerfile
+      dockerfile: src/mcf_rag_chatbot/webscraper/Dockerfile
     volumes:
       - ./data:/app/data
-
 
   backend:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: src/mcf_rag_chatbot/backend/Dockerfile
     ports:
       - "8000:8000"
-    env_file:
-      - .env
     volumes:
       - ./data:/app/data
+    depends_on:
+      - webscraper
 
-  
   frontend:
     build:
       context: .
-      dockerfile: frontend/Dockerfile
+      dockerfile: src/mcf_rag_chatbot/frontend/Dockerfile
     ports:
       - "8501:8501"
     depends_on:

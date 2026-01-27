@@ -1,13 +1,14 @@
 [project]
 name = "mcf_rag_chatbot"
 version = "0.1.0"
-description = "packaging mcf_rag_chatbot and using uv workspaces"
+description = "mcf_rag_chatbot workspace"
 readme = "README.md"
 authors = [
     { name = "Casper Zanichell", email = "casperzanichelli98@gmail.com" }
 ]
 requires-python = ">=3.11"
 
+# Workspace packages
 dependencies = ["backend", "frontend", "webscraper"]
 
 [tool.uv.sources]
@@ -16,7 +17,11 @@ frontend = {workspace = true}
 webscraper = {workspace = true}
 
 [tool.uv.workspace]
-members = ["src/mcf_rag_chatbot/frontend", "src/mcf_rag_chatbot/backend", "src/mcf_rag_chatbot/webscraper"]
+members = [
+    "src/mcf_rag_chatbot/frontend",
+    "src/mcf_rag_chatbot/backend", 
+    "src/mcf_rag_chatbot/webscraper"
+]
 
 
 
