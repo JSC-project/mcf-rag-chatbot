@@ -1,6 +1,6 @@
 import requests 
 from bs4 import BeautifulSoup
-from .utils import clean_text
+from .utils import clean_text, export_data
 from .models import MCFHeading, MCFLink, MCFPage, ExtractHtml
 
 # html extraction model 
@@ -129,7 +129,9 @@ class MCFPageScraper:
             headings=headings,
             content=content,
         )
+        
 
+# html container exploration
 # if __name__ == "__main__":
     
 #     html = MCFPageScraper(url).soup.prettify()
@@ -138,13 +140,27 @@ class MCFPageScraper:
 #         print(f"\n--- BLOCK {start}–{start+5000} ---\n")
 #         print(html[start:start+5000])
 
+
+# for testing
+# if __name__ == "__main__":
+
+#     links = MCFLinkScraper(
+#         "sv/rad-till-privatpersoner/hemberedskap---preppa-for-en-vecka"
+#     ).scrape_links()
+
+#     print(f"{len(links.links)} links:\n")
+
+#     for slug, url in links.links.items():
+#         print(f"- {slug} → {url}")
+
+#     for slug, url in links.links.items():
+#         page = MCFPageScraper(url).extract()
+#         export_data(page.model_dump(), url)
+
+
 # sources:
 # https://pypi.org/project/beautifulsoup4/
 # copilot
 # https://github.com/AIgineerAB/scraping-nbi/blob/main/scraper.py
-
-
-
-
         
 
