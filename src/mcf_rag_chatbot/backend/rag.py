@@ -11,7 +11,7 @@ vector_db = lancedb.connect(uri=str(VECTOR_DATABASE_PATH))
 
 rag_agent = Agent(
     model="google-gla:gemini-2.5-flash",
-    retries=1,
+    retries=3,
     system_prompt=("""
         You MUST use the provided tool to retrieve documents before answering.
         Answer ONLY using information from the retrieved documents.
