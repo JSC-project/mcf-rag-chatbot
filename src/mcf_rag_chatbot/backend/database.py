@@ -7,12 +7,20 @@ from .data_models import MCFContent
 def get_db():
     VECTOR_DATABASE_PATH.mkdir(parents=True, exist_ok=True)
     #Connects to Lancedb at the location we determined in constants.py
-    return lancedb.connect(VECTOR_DATABASE_PATH)
+    return lancedb.connect(str(VECTOR_DATABASE_PATH))
 
 def init_table():
     #Open Table or creating it if not exist
     db = get_db()
-    if TABLE_NAME not in db.table_names():
+    tables_resp = db.list_tables()
+    tables = tables_resp.tables
+    
+
+    print("DB URI:", str(VECTOR_DATABASE_PATH))
+    print("Existing tables:", tables)
+    print("TABLE_NAME:", TABLE_NAME)
+
+    if TABLE_NAME not in tables:
         #Here the table is created with MCFContent as model
         return db.create_table(TABLE_NAME, schema=MCFContent)
     return db.open_table(TABLE_NAME)
@@ -50,5 +58,6 @@ def search_knowledge_base(query: str, limit: int = 3):
 
 if __name__ == "__main__":
     print("DB path:", VECTOR_DATABASE_PATH.resolve())
-    init_table()
+    table = init_table()
+    print("Row count:", table.count_rows())
     print("OK: knowledge_base initialized")
