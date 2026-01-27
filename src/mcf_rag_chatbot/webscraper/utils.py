@@ -1,4 +1,4 @@
-from mcf_rag_chatbot.backend.constants import DATA_PATH
+from .constants import DATA_PATH
 import re
 import json
 
