@@ -1,15 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from pydantic_ai.exceptions import ModelHTTPError
 from .data_models import Prompt
+from fastapi.responses import RedirectResponse
 from .rag import rag_agent, vector_db
 
 app = FastAPI()
 
 
-# root page message
-@app.get("/")
+@app.get("/", include_in_schema=False)
 def root():
-    return {"Chatbot API is running. http://127.0.0.1:8000/docs for swagger UI"}
+    return RedirectResponse(url="/docs")
 
 # api query function
 @app.post("/rag/query")
@@ -24,7 +24,7 @@ async def query_documentation(query: Prompt):
         raise HTTPException(status_code=502, detail=f"LLM error: {e.status_code}")
 
 
-#LLM-generated for testingg to retrive data from lancedb
+#LLM-generated for testing to retrive data from lancedb
 @app.get("/rag/retrieve")
 def rag_retrieve(q: str, k: int = 3):
     try:
