@@ -8,7 +8,8 @@ COPY src src
 RUN pip install --no-cache-dir uv
 RUN uv sync --no-dev
 
-WORKDIR /app/src/mcf_rag_chatbot/webscraper
+WORKDIR /app/src/mcf_rag_chatbot/frontend
 
-CMD ["uv", "run", "-m", "mcf_rag_chatbot.webscraper.mcf_scraper"]
+CMD ["uv", "run", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+
 
