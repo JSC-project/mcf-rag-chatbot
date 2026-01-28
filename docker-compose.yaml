@@ -17,6 +17,9 @@ services:
       - ./data:/app/data
     depends_on:
       - webscraper
+    environment:
+    - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+
 
   frontend:
     build:

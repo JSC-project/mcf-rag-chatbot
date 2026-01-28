@@ -2,8 +2,8 @@
 name = "webscraper"
 version = "0.1.0"
 description = "webscraper for mcf_rag_chatbot"
-
 requires-python = ">=3.11"
+
 dependencies = [
     "bs4",
     "requests",
@@ -12,3 +12,12 @@ dependencies = [
 
 [tool.uv]
 package = true
+
+[tool.setuptools]
+package-dir = {"" = "../../"} 
+
+[tool.setuptools.packages.find]
+where = ["../../src"]    
+include = ["mcf_rag_chatbot.webscraper"]
+
+

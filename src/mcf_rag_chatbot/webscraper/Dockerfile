@@ -1,16 +1,16 @@
-FROM python:3.13-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY src/mcf_rag_chatbot/webscraper .
+# Copy workspace root files
 COPY pyproject.toml uv.lock ./
 
-# installs uv
+# Copy entire workspace source tree
+COPY src src
+
 RUN pip install --no-cache-dir uv
+RUN uv sync --no-dev
 
-# excluding packages that are marked as dev, e.g. black, ruff, flake8 ...
-RUN uv sync --no-dev 
-
-WORKDIR /app/webscraper
+WORKDIR /app/src/mcf_rag_chatbot/webscraper
 
 CMD ["uv", "run", "-m", "mcf_rag_chatbot.webscraper.mcf_scraper"]
