@@ -25,7 +25,7 @@ img_base64 = get_base64_image(image_path)
 with open(css_path) as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Inject Dynamic Background (Base64)
+# Set Dynamic Background (Base64)
 st.markdown(f"""
     <style>
     .stApp {{
