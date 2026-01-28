@@ -1,0 +1,10 @@
+[project]
+name = "frontend"
+version = "0.1.0"
+description = "frontend for mcf_rag_chatbot"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit", 
+]
+[tool.uv]
+package = true
