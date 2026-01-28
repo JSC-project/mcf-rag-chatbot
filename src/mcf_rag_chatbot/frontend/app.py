@@ -27,35 +27,6 @@ with open(css_path) as f:
 
 # Inject Dynamic Background (Base64)
 st.markdown(f"""
-import os
-
-API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
-from mcf_rag_chatbot.backend.rag import rag_agent #revice the rag agent
-
-# Function for background image
-def get_base64_image(file_path):
-    with open(file_path, "rb") as f:
-        return base64.b64encode(f.read()).decode()
-    
-# Paths
-current_dir = Path(__file__).parent
-root_path = Path(__file__).parents[3]
-image_path = root_path / "assets" / "4de476ee-1e0f-40c6-aa3f-7958bae6d9ae.webp"
-css_path = current_dir / "style.css"
-
-# Initialize Session State
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-# Background Image Processing
-img_base64 = get_base64_image(image_path)
-
-# Apply CSS from style.css
-with open(css_path) as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# Inject Dynamic Background (Base64)
-st.markdown(f"""
     <style>
     .stApp {{
         background: linear-gradient(rgba(0, 31, 63, 0.82), rgba(0, 31, 63, 0.82)), 

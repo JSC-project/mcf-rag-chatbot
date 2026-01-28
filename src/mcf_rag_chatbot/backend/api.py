@@ -10,7 +10,6 @@ app = FastAPI()
 @app.get("/", include_in_schema=False)
 def root():
     return RedirectResponse(url="/docs")
-    return RedirectResponse(url="/docs")
 
 # api query function
 @app.post("/rag/query")
