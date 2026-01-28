@@ -2,6 +2,9 @@ import streamlit as st
 import base64
 from pathlib import Path
 from mcf_rag_chatbot.backend.rag import rag_agent #revice the rag agent
+import os
+
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 # Function for background image
 def get_base64_image(file_path):
