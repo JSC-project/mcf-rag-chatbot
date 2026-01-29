@@ -2,6 +2,9 @@ import streamlit as st
 import base64
 from pathlib import Path
 from mcf_rag_chatbot.backend.rag import rag_agent #revice the rag agent
+import os
+
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 # Function for background image
 def get_base64_image(file_path):
@@ -10,9 +13,9 @@ def get_base64_image(file_path):
     
 # Paths
 current_dir = Path(__file__).parent
-root_path = Path(__file__).parents[3]
-image_path = root_path / "assets" / "4de476ee-1e0f-40c6-aa3f-7958bae6d9ae.webp"
+image_path = current_dir / "assets" / "4de476ee-1e0f-40c6-aa3f-7958bae6d9ae.webp"
 css_path = current_dir / "style.css"
+
 
 # Initialize Session State
 if "messages" not in st.session_state:

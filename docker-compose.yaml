@@ -1,0 +1,42 @@
+services:
+
+  webscraper:
+    build:
+      context: .
+      dockerfile: src/mcf_rag_chatbot/webscraper/Dockerfile
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  backend:
+    build:
+      context: .
+      dockerfile: src/mcf_rag_chatbot/backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - webscraper
+
+  frontend:
+    build:
+      context: .
+      dockerfile: src/mcf_rag_chatbot/frontend/Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./src:/app/src
+    environment:
+      - API_URL=http://backend:8000
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - backend
+
