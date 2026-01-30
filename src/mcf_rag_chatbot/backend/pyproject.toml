@@ -10,7 +10,6 @@ dependencies = [
     "fastapi",
     "uvicorn",
     "google-genai",
-    "google-generativeai",
     "pydantic",
     "langchain_text_splitters",
 ]
