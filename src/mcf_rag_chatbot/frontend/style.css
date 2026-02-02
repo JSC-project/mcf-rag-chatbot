@@ -2,7 +2,7 @@
 
 /* Hide streamlit elements */
 footer {visibility: hidden;}
-header {visibility: hidden;}
+header {visibility: visible;}
 
 /* Main container */
 .stApp {
