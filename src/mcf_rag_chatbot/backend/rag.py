@@ -2,7 +2,7 @@ from __future__ import annotations
 import lancedb
 from pydantic_ai import Agent
 from .data_models import RagResponse
-from .constants import VECTOR_DATABASE_PATH
+from .constants import VECTOR_DATABASE_PATH, TABLE_NAME
 
 vector_db = lancedb.connect(uri=str(VECTOR_DATABASE_PATH))
 
@@ -24,7 +24,7 @@ rag_agent = Agent(
 
 @rag_agent.tool_plain
 def retrieve_top_documents(query: str, k: int = 3) -> str:
-    table = vector_db.open_table("mcf_content")
+    table = vector_db.open_table(TABLE_NAME)
     
     results = table.search(query).limit(k).to_list()
     if not results:

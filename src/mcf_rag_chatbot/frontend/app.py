@@ -13,9 +13,9 @@ def get_base64_image(file_path):
     
 # Paths
 current_dir = Path(__file__).parent
-root_path = Path(__file__).parents[3]
-image_path = root_path / "assets" / "4de476ee-1e0f-40c6-aa3f-7958bae6d9ae.webp"
+image_path = current_dir / "assets" / "4de476ee-1e0f-40c6-aa3f-7958bae6d9ae.webp"
 css_path = current_dir / "style.css"
+
 
 # Initialize Session State
 if "messages" not in st.session_state:
