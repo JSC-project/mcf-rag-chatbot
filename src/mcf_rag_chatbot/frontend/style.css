@@ -1,8 +1,8 @@
 /* style.css */
 
 /* Hide streamlit elements */
-footer {visibility: hidden;}
-header {visibility: hidden;}
+footer { visibility: hidden !important; }
+header { visibility: visible !important; }  /* måste vara synlig för sidebar-nav */
 
 /* Main container */
 .stApp {
@@ -23,24 +23,40 @@ header {visibility: hidden;}
 /* Chat Message Bubbles */
 [data-testid="stChatMessage"] {
     background-color: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 20px !important;
-    max-width: 800px;
+    max-width: 800px !important;
     margin: 10px auto !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
 }
 
 /* Typography */
 h1 {
-    text-align: center;
+    text-align: center !important;
     color: white !important;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    font-weight: 800;
-    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7) !important;
+    font-weight: 800 !important;
+    margin-bottom: 1rem !important;
 }
 
 p {
-    text-align: center;
+    text-align: center !important;
     color: rgba(255,255,255,0.9) !important;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem !important;
+}
+
+/* --- HIDE only the app page entry in sidebar --- */
+
+/* Most Streamlit versions: nav items are links */
+section[data-testid="stSidebar"] a[href$="app"],
+section[data-testid="stSidebar"] a[href*="/app"],
+section[data-testid="stSidebar"] a[href*="app.py"]{
+  display: none !important;
+}
+
+/* Some versions wrap links in li/div – hide the parent row too */
+section[data-testid="stSidebar"] li:has(a[href$="app"]),
+section[data-testid="stSidebar"] li:has(a[href*="/app"]),
+section[data-testid="stSidebar"] li:has(a[href*="app.py"]){
+  display: none !important;
 }
