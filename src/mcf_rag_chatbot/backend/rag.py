@@ -12,10 +12,24 @@ rag_agent = Agent(
     retries=1,
     system_prompt=("""
         You MUST use the provided tool to retrieve documents before answering.
-        Answer ONLY using information from the retrieved documents.
-        If retrieve_top_documents returns NO_RELEVANT_DOCUMENTS, reply exactly: "Sorry, I don't know that".
-        Keep the answer short and clear.
-        Always include the source title and source url.
+        
+        Answer ONLY using information form the retrived documents.
+        DO NOT replace explanations with references.
+        the answer must stand on its own without requiring the user to visit the source.
+                   
+        If retrieve_top_documents returns NO_RELEVANT_DOCUMENTS, reply exactly:
+        "Sorry, I don't know that".
+                   
+        Provide detailed, practical gudiance for private individuals in Sweden.
+        Explain why recommendations are given when the documents allow it.
+        If multiple documents are relevant, combine the information into one clear answer.
+                   
+        Structure the response clearly using paragraphs or bullet points when helpful.
+        Avoid generic or high-level summaries if the documents conatin concrete details.
+                   
+       Always end the answer with:
+        - Source title
+        - Source URL 
         """
     ),
     output_type=RagResponse,
@@ -23,7 +37,7 @@ rag_agent = Agent(
 
 
 @rag_agent.tool_plain
-def retrieve_top_documents(query: str, k: int = 3) -> str:
+def retrieve_top_documents(query: str, k: int = 6) -> str:
     table = vector_db.open_table(TABLE_NAME)
     
     results = table.search(query).limit(k).to_list()
@@ -37,7 +51,7 @@ def retrieve_top_documents(query: str, k: int = 3) -> str:
         url = r["url"]
         content= r["content"]
 
-        content_snippet = content[:1500]
+        content_snippet = content[:1000]
 
         parts.append(
             f"[SOURCE {i}]\n"
