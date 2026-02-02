@@ -28,7 +28,6 @@ rag_agent = Agent(
         Avoid generic or high-level summaries if the documents conatin concrete details.
                    
        Always end the answer with:
-        - Source title
         - Source URL 
         """
     ),
