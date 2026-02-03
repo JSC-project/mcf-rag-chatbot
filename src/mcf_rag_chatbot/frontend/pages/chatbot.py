@@ -2,6 +2,7 @@ import streamlit as st
 import base64
 from pathlib import Path
 from mcf_rag_chatbot.backend.rag import rag_agent
+from mcf_rag_chatbot.backend.faq import FAQHandler
 import os
 
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
@@ -14,6 +15,11 @@ def get_base64_image(file_path):
 current_dir = Path(__file__).parent.parent
 image_path = current_dir / "assets" / "4de476ee-1e0f-40c6-aa3f-7958bae6d9ae.webp"
 css_path = current_dir / "style.css"
+
+# FAQ handler init
+project_root = Path(__file__).parents[2]  # mcf_rag_chatbot/
+faq_log_path = project_root / "data" / "faq" / "questions.json"
+faq_handler = FAQHandler(faq_log_path)
 
 # Initialize Session State
 if "messages" not in st.session_state:
@@ -44,6 +50,20 @@ st.markdown(
 st.title("MCF-Chatbot 🤖")
 st.write("Välkommen till MCF-Chatbot! Här kan du ställa frågor som berör beredskap vid kris eller krig")
 
+# FAQ-sektion
+st.subheader("💡 Vanliga frågor")
+
+top_questions = faq_handler.get_top_questions()
+cols = st.columns(2)
+clicked_question = None
+
+for i, question in enumerate(top_questions):
+    if cols[i % 2].button(question):
+        clicked_question = question
+
+
+
+
 # Display Messages (historik)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -51,18 +71,22 @@ for message in st.session_state.messages:
 
 # ✅ Chat input (ska ligga här)
 prompt = st.chat_input("Ställ din fråga...")
+user_input = prompt or clicked_question
 
-# User input and RAG Integration
-if prompt:
-    st.session_state.messages.append({"role": "user", "content": prompt})
+if user_input:
+    faq_handler.log_question(user_input)
+
+    st.session_state.messages.append(
+        {"role": "user", "content": user_input}
+    )
+
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(user_input)
 
-    # Generate answer from RAG
     with st.chat_message("assistant"):
         with st.spinner("Söker svar..."):
             try:
-                result = rag_agent.run_sync(prompt)
+                result = rag_agent.run_sync(user_input)
 
                 ans = result.output.answer
                 res_url = getattr(result.output, "url", "")
@@ -74,7 +98,9 @@ if prompt:
                     full_response = ans
 
                 st.markdown(full_response)
-                st.session_state.messages.append({"role": "assistant", "content": full_response})
+                st.session_state.messages.append(
+                    {"role": "assistant", "content": full_response}
+                )
 
             except Exception as e:
                 st.error(f"Ett fel uppstod: {e}")
