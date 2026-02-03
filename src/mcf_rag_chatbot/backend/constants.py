@@ -1,5 +1,5 @@
 from pathlib import Path
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 DATA_PATH = PROJECT_ROOT / "data" / "data_from_crawler"
 
