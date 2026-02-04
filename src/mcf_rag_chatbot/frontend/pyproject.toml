@@ -1,10 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "frontend"
 version = "0.1.0"
 description = "frontend for mcf_rag_chatbot"
 requires-python = ">=3.11"
 dependencies = [
-    "streamlit", 
+    "streamlit",
 ]
+
 [tool.uv]
 package = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["pages*", "assets*"]

@@ -15,7 +15,7 @@ class FAQHandler:
         "Hur mycket kontanter bör jag ha hemma?",
         "Checklista på saker att ha hemma i kris eller krig",
         "Hur mycket mat och vatten bör jag ha hemma?",
-        "Får jag tar med mig mitt husdjur till ett skyddsrum?"
+        "Får jag ta med mig mitt husdjur till ett skyddsrum?"
     ]
 
     def __init__(self, log_file_path: Path):
