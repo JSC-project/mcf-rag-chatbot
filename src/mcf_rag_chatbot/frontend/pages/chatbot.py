@@ -3,7 +3,7 @@ import base64
 from pathlib import Path
 import os
 import requests
-from src.mcf_rag_chatbot.backend.faq import FAQHandler
+from mcf_rag_chatbot.backend.faq import FAQHandler
 
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
@@ -51,15 +51,22 @@ st.title("MCF-Chatbot 🤖")
 st.write("Välkommen till MCF-Chatbot! Här kan du ställa frågor som berör beredskap vid kris eller krig")
 
 # FAQ-sektion
-st.subheader("💡 Vanliga frågor")
+st.markdown("### 💡 Vanliga frågor")
 
 top_questions = faq_handler.get_top_questions()
 cols = st.columns(2)
 clicked_question = None
 
 for i, question in enumerate(top_questions):
-    if cols[i % 2].button(question):
-        clicked_question = question
+    with cols[i % 2]:
+        
+        if st.button(
+            question, 
+            key=f"faq_{i}",
+            use_container_width=True,
+            type="secondary" 
+        ):
+            clicked_question = question
 
 
 
@@ -70,37 +77,54 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # ✅ Chat input (ska ligga här)
+
 prompt = st.chat_input("Ställ din fråga...")
 
-try:
-    resp = requests.post(
-        f"{API_URL.rstrip('/')}/rag/query",
-        json={"prompt": prompt},
-        timeout=90,
+user_input = prompt or clicked_question
+
+if user_input:
+
+    
+    faq_handler.log_question(user_input)
+
+    
+    st.session_state.messages.append(
+        {"role": "user", "content": user_input}
     )
 
-    if resp.status_code == 503:
-        st.warning("LLM är överbelastad just nu. Försök igen om en liten stund.")
-        st.stop()
+    with st.chat_message("user"):
+        st.markdown(user_input)
 
-    resp.raise_for_status()
-    data = resp.json()
+    with st.chat_message("assistant"):
+        with st.spinner("Söker svar..."):
+            try:
+                resp = requests.post(
+                    f"{API_URL.rstrip('/')}/rag/query",
+                    json={"prompt": user_input},
+                    timeout=90,
+                )
 
-    # data är RagResponse som JSON
-    ans = data.get("answer", "")
+                if resp.status_code == 503:
+                    st.warning("LLM är överbelastad just nu. Försök igen om en liten stund.")
+                    st.stop()
 
-    # Om RagResponse har url/title så används de, annars visar vi bara ans
-    res_url = data.get("url", "") or data.get("source_url", "")
-    res_title = data.get("title", "") or "Källa"
+                resp.raise_for_status()
+                data = resp.json()
 
-    if res_url:
-        full_response = f"{ans}\n\n**Källa:** [{res_title}]({res_url})"
-    else:
-        full_response = ans
+                ans = data.get("answer", "")
+                res_url = data.get("url", "") or data.get("source_url", "")
+                res_title = data.get("title", "") or "Källa"
 
-    st.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+                if res_url:
+                    full_response = f"{ans}\n\n**Källa:** [{res_title}]({res_url})"
+                else:
+                    full_response = ans
 
-except requests.exceptions.RequestException as e:
-    st.error(f"Kunde inte nå backend API: {e}")
+                st.markdown(full_response)
 
+                st.session_state.messages.append(
+                    {"role": "assistant", "content": full_response}
+                )
+
+            except requests.exceptions.RequestException as e:
+                st.error(f"Kunde inte nå backend API: {e}")

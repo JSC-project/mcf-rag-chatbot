@@ -30,6 +30,53 @@ header { visibility: visible !important; }  /* måste vara synlig för sidebar-n
     box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
 }
 
+/* FAQ Subheader */
+.stApp h2, .stApp h3 {
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7) !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+}
+
+/* FAQ Buttons - Force visibility */
+.stButton > button {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    text-align: left !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+    min-height: 70px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+.stButton > button:hover {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+/* Force all text inside buttons to be white */
+.stButton > button *,
+.stButton > button p,
+.stButton > button span,
+.stButton > button div {
+    color: white !important;
+}
+
+/* FAQ Column spacing */
+[data-testid="column"] {
+    padding: 0 8px !important;
+}
+
 /* Typography */
 h1 {
     text-align: center !important;
