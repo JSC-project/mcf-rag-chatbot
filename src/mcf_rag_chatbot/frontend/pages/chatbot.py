@@ -3,6 +3,7 @@ import base64
 from pathlib import Path
 import os
 import requests
+from src.mcf_rag_chatbot.backend.faq import FAQHandler
 
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
