@@ -9,6 +9,8 @@ services:
       - ./data:/app/data
     environment:
       - PYTHONUNBUFFERED=1
+    image: mcfchatbot-fmhxa8h5cef4a3eb.azurecr.io/mcf-webscraper:latest
+
 
   backend:
     build:
@@ -24,19 +26,23 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - webscraper
+    image: mcfchatbot-fmhxa8h5cef4a3eb.azurecr.io/mcf-backend:latest
 
   frontend:
     build:
       context: .
       dockerfile: src/mcf_rag_chatbot/frontend/Dockerfile
     ports:
-      - "8501:8501"
+      - "8501:80"
     volumes:
       - ./src:/app/src
     environment:
-      - API_URL=http://backend:8000
+      #- API_URL=http://backend:8000
+      - API_URL=https://mcf-backend.gentlewave-becd7918.swedencentral.azurecontainerapps.io
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
       - PYTHONUNBUFFERED=1
     depends_on:
       - backend
+    image: mcfchatbot-fmhxa8h5cef4a3eb.azurecr.io/mcf-frontend:latest
+
 
