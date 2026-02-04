@@ -1,8 +1,8 @@
 import streamlit as st
 import base64
 from pathlib import Path
-from mcf_rag_chatbot.backend.rag import rag_agent
 import os
+import requests
 
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
@@ -52,29 +52,35 @@ for message in st.session_state.messages:
 # ✅ Chat input (ska ligga här)
 prompt = st.chat_input("Ställ din fråga...")
 
-# User input and RAG Integration
-if prompt:
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
+try:
+    resp = requests.post(
+        f"{API_URL.rstrip('/')}/rag/query",
+        json={"prompt": prompt},
+        timeout=90,
+    )
 
-    # Generate answer from RAG
-    with st.chat_message("assistant"):
-        with st.spinner("Söker svar..."):
-            try:
-                result = rag_agent.run_sync(prompt)
+    if resp.status_code == 503:
+        st.warning("LLM är överbelastad just nu. Försök igen om en liten stund.")
+        st.stop()
 
-                ans = result.output.answer
-                res_url = getattr(result.output, "url", "")
-                res_title = getattr(result.output, "title", "")
+    resp.raise_for_status()
+    data = resp.json()
 
-                if res_url:
-                    full_response = f"{ans}\n\n**Källa:** [{res_title}]({res_url})"
-                else:
-                    full_response = ans
+    # data är RagResponse som JSON
+    ans = data.get("answer", "")
 
-                st.markdown(full_response)
-                st.session_state.messages.append({"role": "assistant", "content": full_response})
+    # Om RagResponse har url/title så används de, annars visar vi bara ans
+    res_url = data.get("url", "") or data.get("source_url", "")
+    res_title = data.get("title", "") or "Källa"
 
-            except Exception as e:
-                st.error(f"Ett fel uppstod: {e}")
+    if res_url:
+        full_response = f"{ans}\n\n**Källa:** [{res_title}]({res_url})"
+    else:
+        full_response = ans
+
+    st.markdown(full_response)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+except requests.exceptions.RequestException as e:
+    st.error(f"Kunde inte nå backend API: {e}")
+
