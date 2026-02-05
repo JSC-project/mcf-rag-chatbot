@@ -4,6 +4,7 @@ from .data_models import Prompt
 from fastapi.responses import RedirectResponse
 from .rag import rag_agent, vector_db
 
+
 app = FastAPI()
 
 
