@@ -9,7 +9,11 @@ authors = [
 requires-python = ">=3.11"
 
 # Workspace packages
-dependencies = ["backend", "frontend", "webscraper"]
+dependencies = [
+    "backend",
+    "frontend",
+    "webscraper",
+]
 
 [tool.uv.sources]
 backend = {workspace = true}

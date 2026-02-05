@@ -55,3 +55,11 @@ The application is containerized with Docker and deployed to Azure.
 
 ## 📢 Disclaimer
 This project is created for educational purposes as part of an AI engineering course.
+
+
+## Docker with scraper
+docker compose --profile scrape run --rm webscraper
+
+## Docker without scraper
+docker compose up -d --build
+

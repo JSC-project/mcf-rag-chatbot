@@ -105,7 +105,7 @@ class FAQHandler:
                 "most_common": Counter(all_questions).most_common(5)
             }
         except Exception as e:
-            print("Fel vid hämtning av statistik: {e}")
+            print(f"Fel vid hämtning av statistik: {e}")
             return {
                 "total_questions": 0,
                 "unique_questions": 0,

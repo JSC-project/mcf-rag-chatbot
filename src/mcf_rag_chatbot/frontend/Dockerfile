@@ -10,7 +10,8 @@ RUN uv sync --no-dev
 
 WORKDIR /app/src/mcf_rag_chatbot/frontend
 
-CMD ["sh", "-c", "uv run streamlit run app.py --server.address=0.0.0.0 --server.port=80 --server.headless=true"]
+CMD ["uv", "run", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.headless=true", "--browser.gatherUsageStats=false"]
+
 
 
 

@@ -8,6 +8,8 @@ version = "0.1.0"
 description = "frontend for mcf_rag_chatbot"
 requires-python = ">=3.11"
 dependencies = [
+    "geopandas>=1.1.2",
+    "pyogrio>=0.12.1",
     "streamlit",
 ]
 

@@ -1,11 +1,10 @@
 from __future__ import annotations
-import lancedb
 from pydantic_ai import Agent
 from .data_models import RagResponse
-from .constants import VECTOR_DATABASE_PATH, TABLE_NAME
+from .constants import TABLE_NAME
+from .database import get_db 
 
-vector_db = lancedb.connect(uri=str(VECTOR_DATABASE_PATH))
-
+vector_db = get_db()
 
 rag_agent = Agent(
     model="google-gla:gemini-2.5-flash",
