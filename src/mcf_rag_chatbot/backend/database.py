@@ -3,7 +3,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from .constants import VECTOR_DATABASE_PATH, TABLE_NAME
 from .data_models import MCFContent
 
-
+#Create folder
 def get_db():
     VECTOR_DATABASE_PATH.mkdir(parents=True, exist_ok=True)
     #Connects to Lancedb at the location we determined in constants.py

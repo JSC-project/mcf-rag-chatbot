@@ -5,7 +5,6 @@ from fastapi.responses import RedirectResponse
 from .rag import rag_agent, vector_db
 from .constants import TABLE_NAME
 
-
 app = FastAPI()
 
 

@@ -35,7 +35,7 @@ rag_agent = Agent(
 
 
 @rag_agent.tool_plain
-def retrieve_top_documents(query: str, k: int = 6) -> str:
+def retrieve_top_documents(query: str, k: int = 3) -> str:
     table = vector_db.open_table(TABLE_NAME)
     
     results = table.search(query).limit(k).to_list()

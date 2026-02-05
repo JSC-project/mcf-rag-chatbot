@@ -2,11 +2,8 @@ from pydantic import BaseModel, Field
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from dotenv import load_dotenv
-import os
 from datetime import datetime
 from typing import Optional
-
-load_dotenv() #Read the .env file for API-KEY
 
 #Initialize the Gemini embedding model registry
 embeddings_model = get_registry().get("gemini-text").create(name="models/text-embedding-004") 
@@ -33,11 +30,12 @@ class MCFContent(LanceModel):
     # Automatically timestamp every entry when it's created
     updated_at: str = Field(default_factory=lambda: datetime.now().isoformat())
 
+#Output schema for AI-agent response
 class RagResponse(BaseModel):
     title: str = Field(description="title of the used source")
     url: str = Field(description="url of the used source")
     answer: str = Field(description="answer based on retrieved content")
 
-    
+#Input schema for user prompt    
 class Prompt(BaseModel):
     prompt: str
