@@ -121,7 +121,21 @@ Here is the FAQ-handler that logs all the questions being asked, and stores them
 
 
 
+
+
 <img width="1456" height="809" alt="Skärmbild 2026-02-05 140520" src="https://github.com/user-attachments/assets/8399824a-35ab-48e9-8cfb-29a736baaedc" />
+
+
+
+
+We also have a function that makes it possible to see locations of nerby shelters. We have downloaded a gpkg file that mapping out nearby shelters based on lat/lon.
+
+
+<img width="1391" height="802" alt="Skärmbild 2026-02-05 145416" src="https://github.com/user-attachments/assets/308d7a84-7f85-4ac7-b74e-5e7901a2ca7e" />
+
+
+
+<img width="2858" height="1565" alt="Skärmbild 2026-02-05 145519" src="https://github.com/user-attachments/assets/186953f7-fbef-4c6e-a6ea-7010ccd7f028" />
 
 
 
