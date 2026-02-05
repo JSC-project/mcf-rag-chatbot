@@ -3,6 +3,8 @@ from pydantic_ai.exceptions import ModelHTTPError
 from .data_models import Prompt
 from fastapi.responses import RedirectResponse
 from .rag import rag_agent, vector_db
+from .constants import TABLE_NAME
+
 
 app = FastAPI()
 
@@ -28,7 +30,7 @@ async def query_documentation(query: Prompt):
 @app.get("/rag/retrieve")
 def rag_retrieve(q: str, k: int = 3):
     try:
-        table = vector_db.open_table("mcf_content")
+        table = vector_db.open_table(TABLE_NAME)
         results = table.search(q).limit(k).to_list()
         return {
             "count": len(results),
