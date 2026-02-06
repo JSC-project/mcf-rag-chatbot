@@ -9,7 +9,7 @@ from typing import Optional
 load_dotenv() #Read the .env file for API-KEY
 
 #Initialize the Gemini embedding model registry
-embeddings_model = get_registry().get("gemini-text").create(name="models/text-embedding-004") 
+embeddings_model = get_registry().get("gemini-text").create(name="models/gemini-embedding-001") 
 
 
 
@@ -27,8 +27,9 @@ class MCFContent(LanceModel):
     content: str = embeddings_model.SourceField()
 
     # The 'VectorField' stores the AI's numerical understanding of the content.
-    # We use 768 dimensions (the fixed output size of Gemini 004).
-    vector: Optional[Vector(768)] = embeddings_model.VectorField(default=None) # type: ignore
+    # We use 3072 dimensions (the fixed output size of Gemini 001).
+    # Ta bort Optional och Vector helt, låt embeddings_model hantera det:
+    vector: Optional[Vector(3072)] = embeddings_model.VectorField(default=None) # type: ignore
 
     # Automatically timestamp every entry when it's created
     updated_at: str = Field(default_factory=lambda: datetime.now().isoformat())
